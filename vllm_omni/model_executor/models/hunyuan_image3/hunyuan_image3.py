@@ -1045,9 +1045,7 @@ class HunyuanImage3MultiModalProcessor(BaseMultiModalProcessor[HunyuanImage3Proc
         batch_feature = image_processor(prompt, images, **tok_kwargs)
         vae_generator_seed = mm_kwargs.get("vae_generator_seed")
         if vae_generator_seed is not None and images:
-            batch_feature["vae_generator_seed"] = torch.full(
-                (len(images),), int(vae_generator_seed), dtype=torch.long
-            )
+            batch_feature["vae_generator_seed"] = torch.full((len(images),), int(vae_generator_seed), dtype=torch.long)
         return batch_feature
 
     def _hf_processor_applies_updates(
