@@ -1805,10 +1805,7 @@ class HunyuanImage3ForConditionalGeneration(nn.Module, SupportsMultiModal, Suppo
             images = images.to(dtype=self.vae.dtype)
 
         vae_encode_result = self.vae.encode(images)
-        if isinstance(vae_encode_result, torch.Tensor):
-            latents = vae_encode_result
-        else:
-            latents = vae_encode_result.latent_dist.sample(generator)
+        latents = vae_encode_result.latent_dist.sample(generator)
 
         # Apply shift and scaling factors if present
         if hasattr(config, "shift_factor") and config.shift_factor:
