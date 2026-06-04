@@ -864,7 +864,9 @@ class HunyuanImage3Pipeline(
         output, sections = out["output"], out["sections"]
 
         # 4. Encode conditional images
-        if batch_cond_image_info is not None and len(batch_cond_image_info[0]) > 0:
+        # Skip encoding if AR KV reuse is enabled
+        has_ar_kv = kwargs.get("ar_kv_data")
+        if batch_cond_image_info is not None and len(batch_cond_image_info[0]) > 0 and not has_ar_kv:
             cond_vae_images, cond_timestep, cond_vit_images = self._encode_cond_image(
                 batch_cond_image_info, cfg_factor[mode], generator=generator
             )
@@ -1476,6 +1478,7 @@ class HunyuanImage3Pipeline(
             guidance_scale=guidance_scale,
             batch_cond_image_info=batch_cond_image_info,
             bot_task=tokenizer_bot_task or "auto",
+            **ar_kv_kwargs,
         )
 
         model_inputs.update(ar_kv_kwargs)
