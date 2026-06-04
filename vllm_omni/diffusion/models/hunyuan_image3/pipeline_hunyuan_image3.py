@@ -1403,6 +1403,8 @@ class HunyuanImage3Pipeline(
                     use_system_prompt = first_prompt.get("use_system_prompt")
                 if system_prompt is None:
                     system_prompt = first_prompt.get("system_prompt")
+        if isinstance(bot_task, str) and bot_task.lower() == "none":
+            bot_task = None
         if use_system_prompt is not None:
             system_prompt = get_system_prompt(use_system_prompt, bot_task or "image", system_prompt)
             system_prompt = system_prompt.strip() if system_prompt is not None else ""
