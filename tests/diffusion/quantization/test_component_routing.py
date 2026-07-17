@@ -415,6 +415,7 @@ class TestComponentResolve:
 
 # ===================================================================
 # 5. HunyuanImage3 FP8 experts-only routing (regression)
+# ===================================================================
 #
 # Reproduces the checkpoint layout that crashed at startup:
 #   {"default": null, "model.layers.*.mlp.experts": {"method": "fp8"}}
@@ -423,9 +424,9 @@ class TestComponentResolve:
 #   - wildcard key matching in resolve()
 #   - null-default LinearBase fallback to UnquantizedLinearMethod
 #   - apply_vllm_mapper() prefix remapping
-# ===================================================================
 
 
+@pytest.mark.cpu
 class TestHunyuanImage3ExpertsOnly:
     HUNYUAN_MAPPER = WeightsMapper(orig_to_new_prefix={"model.": ""})
 
